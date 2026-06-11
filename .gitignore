@@ -1,7 +1,7 @@
 venv/
 *.h5
 test.py
-resultats.txt
+resultats
 *.keras
 __pycache__/
 .ipynb_checkpoints/
