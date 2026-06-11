@@ -1,0 +1,24 @@
+9 Juin 2026
+=================================================================
+  TAILLE RÉELLE DU RÉSEAU (avant compression)
+=================================================================
+  Layer 1 (dense)    : (784,300) + (300,)   =   942 000 octets
+  Layer 2 (dense_1)  : (300,100) + (100,)   =   120 400 octets
+  Layer 3 (dense_2)  : (100,10)  + (10,)    =     4 040 octets
+  ─────────────────────────────────────────────────────────────
+  Total réseau complet                       = 1 066 440 octets
+  (couches 1+2 compressibles)                = 1 060 800 octets
+=================================================================
+
+  Couche 1  —  784×300  (235 200 poids)
+  ─────────────────────────────────────────────────────────────
+  Étape                              Octets    Ratio  Gain étape
+  ─────────────────────────────────────────────────────────────
+  Original (float32)               940 800    1.00×        —
+  Hadamard (float32, lossless)     941 056    1.00×      1.00×
+  Deadzone (float32 + zéros)       941 056    1.00×        —
+  K-Means (indices + centroides)   117 696    7.99×      8.00×  ← gros gain
+  RLE (paires binaires)            339 390    2.77×      0.35×  ← augmente !
+  Huffman (octets réels)            89 864   10.47×      3.78×  ◄ final
+
+  Ratio global : 10.44×  |  Perte précision : +0.20%
